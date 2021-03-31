@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "managedClusters_P4_AKS_name": {
+            "value": null
+        },
+        "virtualNetworks_P4_RG_vnet_externalid": {
+            "value": null
+        },
+        "workspaces_defaultworkspace_7551330a_ce82_4dd3_9cf1_d24fdf33d0b9_weu_externalid": {
+            "value": null
+        },
+        "publicIPAddresses_566f76fe_06c4_44ba_9297_0338e3609915_externalid": {
+            "value": null
+        }
+    }
+}

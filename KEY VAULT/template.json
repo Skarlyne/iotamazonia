@@ -1,0 +1,176 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vaults_P4KV_name": {
+            "defaultValue": "P4KV",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2020-04-01-preview",
+            "name": "[parameters('vaults_P4KV_name')]",
+            "location": "westeurope",
+            "properties": {
+                "sku": {
+                    "family": "A",
+                    "name": "Standard"
+                },
+                "tenantId": "14bc5219-40ca-4d62-a8e4-7c97c1236349",
+                "accessPolicies": [
+                    {
+                        "tenantId": "14bc5219-40ca-4d62-a8e4-7c97c1236349",
+                        "objectId": "d63290aa-3362-448e-819a-5d6089f5e87f",
+                        "permissions": {
+                            "keys": [],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete"
+                            ],
+                            "certificates": []
+                        }
+                    },
+                    {
+                        "tenantId": "14bc5219-40ca-4d62-a8e4-7c97c1236349",
+                        "objectId": "2f5f1d58-27ed-469c-b693-c529e8b212ca",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ]
+                        }
+                    },
+                    {
+                        "tenantId": "14bc5219-40ca-4d62-a8e4-7c97c1236349",
+                        "objectId": "9d484cbb-b6de-4dd4-92c6-8153600261ec",
+                        "permissions": {
+                            "keys": [
+                                "Create",
+                                "UnwrapKey",
+                                "Decrypt",
+                                "List",
+                                "Get",
+                                "WrapKey",
+                                "Encrypt",
+                                "Delete"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "Set",
+                                "List",
+                                "Delete"
+                            ],
+                            "certificates": []
+                        }
+                    }
+                ],
+                "enabledForDeployment": true,
+                "enabledForDiskEncryption": false,
+                "enabledForTemplateDeployment": true,
+                "enableSoftDelete": true,
+                "softDeleteRetentionInDays": 90,
+                "enableRbacAuthorization": false,
+                "vaultUri": "https://p4kv.vault.azure.net/",
+                "provisioningState": "Succeeded"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2020-04-01-preview",
+            "name": "[concat(parameters('vaults_P4KV_name'), '/comosDbId')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_P4KV_name'))]"
+            ],
+            "properties": {
+                "contentType": "Database Id",
+                "attributes": {
+                    "enabled": true
+                }
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2020-04-01-preview",
+            "name": "[concat(parameters('vaults_P4KV_name'), '/cosmosPK')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_P4KV_name'))]"
+            ],
+            "properties": {
+                "contentType": "Primary Key",
+                "attributes": {
+                    "enabled": true
+                }
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2020-04-01-preview",
+            "name": "[concat(parameters('vaults_P4KV_name'), '/cosmosURL')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_P4KV_name'))]"
+            ],
+            "properties": {
+                "contentType": "URL",
+                "attributes": {
+                    "enabled": true
+                }
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2020-04-01-preview",
+            "name": "[concat(parameters('vaults_P4KV_name'), '/IotHubConnection')]",
+            "location": "westeurope",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_P4KV_name'))]"
+            ],
+            "properties": {
+                "contentType": "Iot Hub Connection connection string",
+                "attributes": {
+                    "enabled": true
+                }
+            }
+        }
+    ]
+}

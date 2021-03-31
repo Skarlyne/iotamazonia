@@ -1,0 +1,43 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "provisioningServices_P4_DPS_name": {
+            "defaultValue": "P4-DPS",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Devices/provisioningServices",
+            "apiVersion": "2020-03-01",
+            "name": "[parameters('provisioningServices_P4_DPS_name')]",
+            "location": "westeurope",
+            "sku": {
+                "name": "S1",
+                "tier": "Standard",
+                "capacity": 1
+            },
+            "properties": {
+                "state": "Active",
+                "provisioningState": "Succeeded",
+                "iotHubs": [
+                    {
+                        "connectionString": "HostName=P4-HUB.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=****",
+                        "location": "westeurope"
+                    }
+                ],
+                "allocationPolicy": "Hashed"
+            }
+        },
+        {
+            "type": "Microsoft.Devices/provisioningServices/certificates",
+            "apiVersion": "2020-03-01",
+            "name": "[concat(parameters('provisioningServices_P4_DPS_name'), '/Certificat-', parameters('provisioningServices_P4_DPS_name'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Devices/provisioningServices', parameters('provisioningServices_P4_DPS_name'))]"
+            ]
+        }
+    ]
+}
